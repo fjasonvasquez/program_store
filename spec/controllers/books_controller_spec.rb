@@ -73,7 +73,7 @@ RSpec.describe BooksController, :type => :controller do
 	end
 
 	describe "PUT #update" do
-		let(:book) { Fabricate(:book, title: 'Awesome title') }
+		let(:book) { Fabricate(:book, title: 'Book has been updated') }
 		context "a successful update" do
 		before do
 		put :update, book: Fabricate.attributes_for(:book, title: 'Updated title'), id: book.id
@@ -99,7 +99,7 @@ RSpec.describe BooksController, :type => :controller do
 			end
 
 			it "does not update the modified book object" do
-				expect(Book.first.title).to eq('Awesome title')
+				expect(Book.first.title).to eq('Title has not been updated')
 			end
 
 			it "sets the failure flash message" do
@@ -109,6 +109,7 @@ RSpec.describe BooksController, :type => :controller do
 	end
 
 	describe 'DELETE #destroy' do
+		let(:book) { Fabricate(:book) }
 		before do
 			delete :destroy, id: book 
 		end
