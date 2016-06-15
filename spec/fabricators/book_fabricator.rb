@@ -1,9 +1,9 @@
 Fabricator(:book) do
-  title        "MyString"
-  isbn         "MyString"
-  description  "MyText"
-  published_at "2016-06-13"
-  publisher    nil
-  page_count   1
-  price        "9.99"
+  title        { Faker::Lorem.sentence }
+  price				 { Faker::Commerce.price }
+  isbn         { Faker::Code.isbn }
+  page_count   { Faker::Number.number(4) }
+  description  { Faker::Lorem.paragraph }
+  published_at 1.year.ago
+  publisher    
 end

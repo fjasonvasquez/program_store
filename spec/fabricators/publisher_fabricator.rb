@@ -1,3 +1,3 @@
 Fabricator(:publisher) do
-  name "MyString"
+  name { Faker::Company.name }
 end

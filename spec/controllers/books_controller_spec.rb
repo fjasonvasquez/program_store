@@ -73,9 +73,56 @@ RSpec.describe BooksController, :type => :controller do
 	end
 
 	describe "PUT #update" do
-		let(:book { Fabricate(:book, title: 'Awesome title') }
-			context "a successful update" do
+		let(:book) { Fabricate(:book, title: 'Awesome title') }
+		context "a successful update" do
+		before do
+		put :update, book: Fabricate.attributes_for(:book, title: 'Updated title'), id: book.id
+		end
 
+		it "updates the modified book object" do
+			expect(Book.first.title).to eq('Updated title')
+			expect(Book.first.title).not_to eq('Awesome title')
+		end
+
+		it "redirects to the show action" do
+			expect(response).to redirect_to book_path(Book.first)
+		end
+
+		it "sets the success flash message" do
+			expect(flash[:success]).to eq('Book has been updated')
+		end
+	end
+
+		context "unsuccessful update" do
+			before do
+				put :update, book: Fabricate.attributes_for(:book, title: 'Title has not been updated'), id: book.id
 			end
+
+			it "does not update the modified book object" do
+				expect(Book.first.title).to eq('Awesome title')
+			end
+
+			it "sets the failure flash message" do
+				expect(flash[:danger]).to eq('Book has not been updated')
+			end
+		end #context
+	end
+
+	describe 'DELETE #destroy' do
+		before do
+			delete :destroy, id: book 
+		end
+
+		it "deletes the book with the given id" do
+			expect(Book.count).to eq(0)
+		end
+
+		it "sets the flash message" do
+			expect(flash[:success]).to eq('Book has been deleted')
+		end
+
+		it "redirects to the index page" do
+			expect(response).to redirect_to books_path
+		end
 	end
 end
