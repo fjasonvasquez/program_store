@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "creating Books" do 
+RSpec.feature "Creating Books" do 
 	let!(:peachpit) { Fabricate(:publisher, name: 'Peachpit Press') }
 	let!(:author1) { Fabricate(:author) }
 	let!(:author2) { Fabricate(:author) }
