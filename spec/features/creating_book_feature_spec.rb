@@ -15,7 +15,7 @@ RSpec.feature "creating Books" do
 		fill_in "isbn", with: "9870321772978"
 		fill_in "Page count", with: 518
 		fill_in "Price", with: 34.99
-		fill_in "Page count", with: "Learn Javascript the quick and easy way"
+		fill_in "Description", with: "Learn Javascript the quick and easy way"
 		fill_in "Published at", with: "2016-01-01"
 		select "Peachpit Press", from: "Publisher"
 		check_author1.full_name
