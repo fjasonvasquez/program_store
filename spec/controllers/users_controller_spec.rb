@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe UsersController do 
+RSpec.describe UsersController do 
 
 	describe "GET new" do 
 		it "assigns a new user to @user" do

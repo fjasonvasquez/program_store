@@ -3,7 +3,9 @@
     <header>
       <h3 class='titles'><%= "#{@user.full_name}" %>'s Profile</h3>
     </header>
-    <p class='cartless'>Email: <%= @user.email %></p>
+    <p id="first-name">First name: <%= @user.first_name %></p>
+    <p id="last-name">Last name: <%= @user.last_name %></p>
+    <p id="email">Email: <%= @user.email %></p>
   </div>
 </section>
 
