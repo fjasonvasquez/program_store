@@ -37,7 +37,7 @@ class BooksController < ApplicationController
 			flash[:success] = 'Book has been updated'
 			redirect_to @book
 		else
-			flash[:danger] = 'Book has not been updated' 
+			flash[:danger] = "Book has not been updated" 
 			render :edit
 		end
 	end
