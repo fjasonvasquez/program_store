@@ -53,7 +53,7 @@ describe SessionsController do
 		it "logs the user out" do 
 			session[:user_id] = user.id
 
-			delet :destroy, id: user.id
+			delete :destroy, id: user.id
 			expect(session[:user_id]).to be_nil
 		end
 
