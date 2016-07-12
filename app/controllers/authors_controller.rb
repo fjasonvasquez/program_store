@@ -8,7 +8,7 @@ class AuthorsController < ApplicationController
 	end
 
 	def show
-		require 'pry';binding.pry
+		#require 'pry';binding.pry
 	end
 
 	def new
