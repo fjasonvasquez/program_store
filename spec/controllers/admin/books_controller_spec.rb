@@ -1,6 +1,12 @@
 require 'rails_helper'
+require 'support/macros'
+require 'support/shared_examples'
 
-RSpec.describe BooksController, :type => :controller do 
+RSpec.describe Admin::BooksController, :type => :controller do
+	let(:admin) { Fabricate(:admin) }
+
+	before { set_current_admin admin }
+	 
 	describe "GET #index" do 
 		it "returns a successful http request status code" do
 			get :index
