@@ -182,7 +182,7 @@ RSpec.describe Admin::AuthorsController, :type => :controller do
 		it "redirects to the index action" do 
 			delete :destroy, id: author.id
 
-			expect(response).to redirect_to authors_path
+			expect(response).to redirect_to admin_authors_path
 		end
 	end
 

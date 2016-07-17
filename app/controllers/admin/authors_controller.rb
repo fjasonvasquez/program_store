@@ -27,7 +27,6 @@ class Admin::AuthorsController < Admin::BaseController
 	end
 
 	def edit
-		
 	end
 
 	def update

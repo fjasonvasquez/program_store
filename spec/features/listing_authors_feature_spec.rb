@@ -29,3 +29,5 @@ RSpec.feature 'Listing Authors' do
 
 	scenario 'with none created' do 
 		Author.delete_all
+	end
+end
