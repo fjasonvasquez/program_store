@@ -1,6 +1,7 @@
 require 'spec_helper'
+require 'support/macros'
 
-feature 'Creating Publishers' do
+RSpec.feature 'Creating Publishers' do
   let(:admin) { Fabricate(:admin) }
   let(:user) { Fabricate(:user) }
 
