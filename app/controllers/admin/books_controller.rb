@@ -19,7 +19,7 @@ class Admin::BooksController < Admin::BaseController
 		@book = Book.new(book_params)
 		if @book.save
 			flash[:success] = 'Book has been created'
-			redirect_to @book
+			redirect_to [:admin, @book]
 		else
 			flash.now[:danger] = 'Book has not been created'
 			@publishers = Publisher.all
@@ -35,7 +35,7 @@ class Admin::BooksController < Admin::BaseController
 	def update
 		if @book.update(book_params)
 			flash[:success] = 'Book has been updated'
-			redirect_to @book
+			redirect_to [:adminm @book]
 		else
 			flash[:danger] = "Book has not been updated" 
 			render :edit
@@ -45,7 +45,7 @@ class Admin::BooksController < Admin::BaseController
 	def destroy
 		if @book.destroy
 			flash[:success] = 'Book has been deleted'
-			redirect_to books_path
+			redirect_to admin_books_path
 		end
 	end
 
