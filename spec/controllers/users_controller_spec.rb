@@ -1,51 +1,76 @@
 require 'rails_helper'
+require 'support/macros'
+require 'support/shared_examples'
 
-RSpec.describe UsersController do 
+RSpec.describe UsersController, :type => :controller do
+  describe "GET #show" do
+    # let(:admin) { Fabricate(:admin) }
+    let(:user) { Fabricate(:user) }
+    #
+    # before { set_current_admin admin }
+    #
+    # context "guest users" do
+    #   it_behaves_like "requires sign in" do
+    #     let(:action) { get :show, id: user.id }
+    #   end
+    # end
+    #
+    # context "non-admin users" do
+    #   it_behaves_like "requires admin" do
+    #     let(:action) { get :show, id: user.id }
+    #   end
+    # end
 
-	describe "GET new" do 
-		it "assigns a new user to @user" do
-			get :new
-			expect(assigns(:user)).to be_a_new(User)
-		end
+    context "admin users" do
+      it "returns a successful http request status code" do
+        get :show, id: user.id
+        expect(response).to have_http_status(:success)
+      end
+    end
+  end
 
-		it "renders the new template" do
-			get :new
-			expect(response).to render_template :new 
-		end
-	end
+  describe "GET #new" do
+    it "returns a successful http request status code" do
+      get :new
+      expect(response).to have_http_status(:success)
+    end
+  end
 
-	describe "GET show" do
-		it "displays a user profile" do
-			john = Fabricate(:user)
-			get :show, id: john.id
-			expect(assigns(:user)).to eq(john)
-		end
+  describe "POST #create" do
+    context "a successful create" do
+      it "saves the new user object" do
+        post :create, user: Fabricate.attributes_for(:user)
 
-		it "displays a user profile" do
-			john = Fabricate(:user)
-			get :show, id: john.id
-			expect(response).to render_template :show
-		end
-	end
+        expect(User.count).to eq(1)
+      end
 
-	describe "POST create" do
-		context "successful user sign up" do
-			it "redirects to the user show path" do
-				post :create, user: Fabricate.attributes_for(:user)
-				expect(response).to redirect_to signin_path
-			end
-		end
+      it "redirects to the signin page" do
+        post :create, user: Fabricate.attributes_for(:user)
 
-		context "unsuccessful user sign up" do
-			it "renders the new template when invalid user data is entered" do
-				post :create, user: Fabricate.attributes_for(:user, first_name: "")
-				expect(response).to render_template :new 
-			end
+        expect(response).to redirect_to signin_path
+      end
 
-			it "sets the flash error message" do
-				post :create, user: Fabricate.attributes_for(:user, first_name: "")
-				expect(flash[:danger]).to be_present
-			end
-		end
-	end
+      it "sets the success flash message" do
+        post :create, user: Fabricate.attributes_for(:user)
+
+        expect(flash[:success]).to eq("User has been created")
+      end
+    end
+
+    context "an unsuccessful create" do
+      it "does not save the user object with invalid inputs" do
+        post :create, user: Fabricate.attributes_for(:user, first_name: nil)
+
+        expect(User.count).to eq(0)
+      end
+
+      it "sets the failure flash message" do
+        post :create, user: Fabricate.attributes_for(:user, first_name: nil)
+
+        expect(flash[:danger]).to eq("User has not been created")
+      end
+    end
+  end
+
+endd
 end

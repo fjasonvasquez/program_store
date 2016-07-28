@@ -35,7 +35,7 @@ class Admin::BooksController < Admin::BaseController
 	def update
 		if @book.update(book_params)
 			flash[:success] = 'Book has been updated'
-			redirect_to [:adminm @book]
+			redirect_to [:admin, @book]
 		else
 			flash[:danger] = "Book has not been updated" 
 			render :edit

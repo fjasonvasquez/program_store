@@ -3,133 +3,205 @@ require 'support/macros'
 require 'support/shared_examples'
 
 RSpec.describe Admin::BooksController, :type => :controller do
-	let(:admin) { Fabricate(:admin) }
+  let(:admin) { Fabricate(:admin) }
 
-	before { set_current_admin admin }
-	 
-	describe "GET #index" do 
-		it "returns a successful http request status code" do
-			get :index
+  before { set_current_admin admin }
 
-			expect(response).to have_http_status(:success)
-		end
-	end
+  describe "GET #index" do
+    context "guest users" do
+      it_behaves_like "requires sign in" do
+        let(:action) { get :index }
+      end
+    end
 
-	describe "GET #show" do 
-		it "returns a successful http request status code" do
-			book = Fabricate(:book)
+    context "non-admin users" do
+      it_behaves_like "requires admin" do
+        let(:action) { get :index }
+      end
+    end
 
-			get :show, id: book
-			expect(response).to have_http_status(:success)
-		end
-	end
+    context "admin users" do
+      it "returns a successful http request stutus code" do
+        get :index
 
-	describe "GET #new" do 
-		it "returns a successful http request status code" do
-			get :new
-			expect(response).to have_http_status(:success)
-		end
-	end
+        expect(response).to have_http_status(:success)
+      end
+    end
+  end
 
-	describe "POST #create" do 
-		context "a successful create" do
-			before do 
-				post :create, book: Fabricate.attributes_for(:book)
-			end
+  describe "GET #show" do
+    let(:book) { Fabricate(:book) }
 
-			it "saves the new book object" do
-				expect(Book.count).to eq(1)
-			end
+    context "guest users" do
+      it_behaves_like "requires sign in" do
+        let(:action) { get :index }
+      end
+    end
 
-			it "redirects to the show action" do
-				expect(response).to redirect_to book_path(Book.first)
-			end
+    context "non-admin users" do
+      it_behaves_like "requires admin" do
+        let(:action) { get :index }
+      end
+    end
 
-			it "sets the success flash message" do
-				expect(flash[:success]).to eq('Book has been created')
-			end
-		end
+    context "admin users" do
+      it "returns a successful http request status code" do
+        get :show, id: book
+        expect(response).to have_http_status(:success)
+      end
+    end
+  end
 
-		context "unsuccessful create" do
-			before do
-				post :create, book: Fabricate.attributes_for(:book, title: nil)
-			end
+  describe "GET #new" do
+    it "returns a successful http request status code" do
+      get :new
+      expect(response).to have_http_status(:success)
+    end
+  end
 
-			it "it does not save the new book object with invalid inputs" do
-				expect(Book.count).to eq(0)
-			end
+  describe "POST #create" do
+    context "guest users" do
+      it_behaves_like "requires sign in" do
+        let(:action) { post :create, book: Fabricate.attributes_for(:book) }
+      end
+    end
 
-			it "renders the new template" do
-				expect(response).to render_template :new
-			end
+    context "non-admin users" do
+      it_behaves_like "requires admin" do
+        let(:action) { post :create, book: Fabricate.attributes_for(:book) }
+      end
+    end
 
-			it "sets the failure flash message" do
-				expect(flash[:danger]).to eq("Book has not been created")
-			end
-		end
-	end
+    context "admin users" do
+      context "a successful create" do
+        before do
+          post :create, book: Fabricate.attributes_for(:book)
+        end
 
-	describe "GET #edit" do
-		let(:book) { Fabricate(:book) }
+        it "saves the new book object" do
+          expect(Book.count).to eq(1)
+        end
 
-		it "sends a successful edit request" do
-			get :edit, id: book
-			expect(response).to have_http_status(:success)
-		end
-	end
+        it "redirects to the show action" do
+          expect(response).to redirect_to admin_book_path(Book.first)
+        end
 
-	describe "PUT #update" do
-		let(:book) { Fabricate(:book, title: 'Book has been updated') }
-		context "a successful update" do
-		before do
-		put :update, book: Fabricate.attributes_for(:book, title: 'Updated title'), id: book.id
-		end
+        it "sets the success flash message" do
+          expect(flash[:success]).to eq('Book has been created')
+        end
+      end
 
-		it "updates the modified book object" do
-			expect(Book.first.title).to eq('Updated title')
-			expect(Book.first.title).not_to eq('Awesome title')
-		end
+      context "unsuccessful create" do
+        before do
+          post :create, book: Fabricate.attributes_for(:book, title: nil)
+        end
 
-		it "redirects to the show action" do
-			expect(response).to redirect_to book_path(Book.first)
-		end
+        it "it does not save the new book object with invalid inputs" do
+          expect(Book.count).to eq(0)
+        end
 
-		it "sets the success flash message" do
-			expect(flash[:success]).to eq('Book has been updated')
-		end
-	end
+        it "renders the new template" do
+          expect(response).to render_template :new
+        end
 
-		context "unsuccessful update" do
-			before do
-				put :update, book: Fabricate.attributes_for(:book, title: 'Title has not been updated'), id: book.id
-			end
+        it "sets the failure flash message" do
+          expect(flash[:danger]).to eq('Book has not been created')
+        end
+      end
+    end
+  end
 
-			it "does not update the modified book object" do
-				expect(Book.first.title).to eq('Title has not been updated')
-			end
+  describe "GET #edit" do
+    let(:book) { Fabricate(:book) }
 
-			it "sets the failure flash message" do
-				expect(flash[:danger]).to eql?("Book has not been updated")
-			end
-		end #context
-	end
+    it "sends a successful edit request" do
+      get :edit, id: book
 
-	describe 'DELETE #destroy' do
-		let(:book) { Fabricate(:book) }
-		before do
-			delete :destroy, id: book 
-		end
+      expect(response).to have_http_status(:success)
+    end
+  end
 
-		it "deletes the book with the given id" do
-			expect(Book.count).to eq(0)
-		end
+  describe "PUT #update" do
+    let(:book) { Fabricate(:book, title: 'Awesome title') }
+    context "guest users" do
+      it_behaves_like "requires sign in" do
+        let(:action) { put :update, book: book, id: book.id }
+      end
+    end
 
-		it "sets the flash message" do
-			expect(flash[:success]).to eq('Book has been deleted')
-		end
+    context "non-admin users" do
+      it_behaves_like "requires admin" do
+        let(:action) { put :update, book: book, id: book.id }
+      end
+    end
 
-		it "redirects to the index page" do
-			expect(response).to redirect_to books_path
-		end
-	end
+    context "admin users" do
+      context "a successful update" do
+        before do
+          put :update, book: Fabricate.attributes_for(:book, title: 'Updated title'), id: book.id
+        end
+
+        it "updates the modified book object" do
+          expect(Book.first.title).to eq('Updated title')
+          expect(Book.first.title).not_to eq('Awesome title')
+        end
+
+        it "redirects to the show action" do
+          expect(response).to redirect_to admin_book_path(Book.first)
+        end
+
+        it "sets the success flash message" do
+          expect(flash[:success]).to eq('Book has been updated')
+        end
+      end
+
+      context "unsuccessful update" do
+        before do
+          put :update, book: Fabricate.attributes_for(:book, title: ''), id: book.id
+        end
+
+        it "does not update the modified book object" do
+          expect(Book.first.title).to eq('Awesome title')
+        end
+
+        it "sets the failure flash message" do
+          expect(flash[:danger]).to eq('Book has not been updated')
+        end
+      end #context
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let(:book) { Fabricate(:book) }
+
+    context "guest users" do
+      it_behaves_like "requires sign in" do
+        let(:action) { delete :destroy, id: book }
+      end
+    end
+
+    context "non-admin users" do
+      it_behaves_like "requires admin" do
+        let(:action) { delete :destroy, id: book }
+      end
+    end
+
+    context "admin users" do
+      before do
+        delete :destroy, id: book
+      end
+
+      it 'deletes the book with the given id' do
+        expect(Book.count).to eq(0)
+      end
+
+      it 'sets the flash message' do
+        expect(flash[:success]).to eq('Book has been deleted')
+      end
+
+      it 'redirects to the index page' do
+        expect(response).to redirect_to admin_books_path
+      end
+    end
+  end
 end
