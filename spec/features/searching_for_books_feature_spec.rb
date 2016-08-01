@@ -7,7 +7,7 @@ RSpec.feature "Searching for Books" do
 	scenario "with existing titles return all the books" do 
 		visit "/" 
 
-		fill_in "search_name", with: "Action" 
+		fill_in "search_word", with: "Action" 
 		click_button "Search" 
 
 		expect(page).to have_content(iText.title)
