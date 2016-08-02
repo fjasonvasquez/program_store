@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 	
 
   
-  
+  resources :books, only: [:show]
   resources :users, only: [:index, :show, :new, :create]
   resource :session
   resources :catalogs, only: [:index, :show] do 
