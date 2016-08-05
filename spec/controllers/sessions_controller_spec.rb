@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SessionsController do
+RSpec.describe SessionsController do
 	let(:user) { Fabricate(:user) }
 
 	describe "GET #new" do 

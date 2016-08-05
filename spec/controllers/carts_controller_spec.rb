@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CartsController, :type => :controller do
+RSpec.describe CartsController, :type => :controller do
   describe "GET #show" do
     let(:cart) { Fabricate(:cart) }
 
