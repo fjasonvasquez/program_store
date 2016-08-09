@@ -10,6 +10,8 @@ class Cart < ActiveRecord::Base
 			cart_item = cart_items.create(book_id: book_id, quantity: 1, price: book_price)
 		else
 			quantity = cart_item.quantity + 1
+			cart_item.update(quantity: quantity)
+			cart_item
 		end
 	end
 end

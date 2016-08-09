@@ -7,4 +7,5 @@ class CartItemsController < ApplicationController
 			redirect_to @cart_item.cart
 		end
 	end
+	
 end
