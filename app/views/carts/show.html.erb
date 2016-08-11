@@ -6,7 +6,7 @@
 			</header>
 
 			<% @cart.cart_items.each do |item|>
-				<%= item.quantity %>&times;<%= item.book.title %><%= "#{number_to_currency(item)}" %>
+				<%= item.quantity %>&times;<%= item.book.title %><%= number_to_currency(item.line_total) %><br>
 				<% end %>
 				<hr>
 
