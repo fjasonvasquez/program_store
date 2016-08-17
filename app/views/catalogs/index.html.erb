@@ -1,26 +1,32 @@
 <section>
-  <header>
-    <% if @books.empty? %>
-      <h3>No Books Defined</h3>
-    <% else %>
-      <h3 class="titles text-center">All Books</h3>
-    <% end %>
-  </header>
-
-  <div id="paginate">
-    <%= will_paginate @books, renderer: BootstrapPagination::Rails, class: "pull-left paginate" %>
-  </div>
-
-  <% @books.each do |book| %>
-    <p class='book-title'>
-      <%= link_to book.title, book_path(book) %><br>
-      <span class='price-class'><%= number_to_currency(book.price) %></span>
-    </p>
-    <p class='book-image'><%= image_tag(book.book_cover_url(:thumb)) if book.book_cover? %></p>
-    <div>
-      <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <header>
+        <% if @books.empty? %>
+          <h3>No Books Defined</h3>
+        <% else %>
+          <h3 class="titles text-center">All Books</h3>
+        <% end %>
+      </header>
     </div>
-  <% end %>
-  <br>
-  <p><%= link_to 'Add New book', add_book_path, class: 'btn btn-primary' %></p>
+
+    <div id="paginate" class="col-md-12">
+      <%= will_paginate @books, renderer: BootstrapPagination::Rails, class: "pull-left paginate" %>
+    </div>
+
+    <div class="col-md-12">
+      <% @books.each do |book| %>
+        <p class='book-title'>
+          <%= link_to book.title, book_path(book) %><br>
+          <span class='price-class'><%= number_to_currency(book.price) %></span>
+        </p>
+        <p class='book-image'><%= image_tag(book.book_cover_url(:thumb)) if book.book_cover? %></p>
+        <div>
+          <hr>
+        </div>
+      <% end %>
+      <br>
+      <p><%= link_to 'Add New book', add_book_path, class: 'btn btn-primary' %></p>
+    </div>
+  <div>
 </section>
