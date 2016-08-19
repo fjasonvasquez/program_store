@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 		@user = User.new(user_params)
 		if @user.save
 			flash[:success] = "User has been created"
-			redirect_to_user_path(@user)
+			redirect_to sign_in_path
 		else
 			flash[:danger] = "User has not been created"
 			render :new
@@ -34,6 +34,7 @@ class UsersController < ApplicationController
 	end
 
 	def user_params
-		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, 
+																 addresses_attributes: [:address_line1, :address_lin2, :city, :zipcode ])
 	end
 end
