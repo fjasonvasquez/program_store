@@ -7,10 +7,10 @@
 
 		<% @order.order_items.each do |item| %>
 			<p><%= item.quantity %>&nbsp; &times;&nbsp; <%= item.book.title %>&nbsp;
-			<%= number_to_currency("#{item.line_total}") %></p>
+			<%= amount("#{item.line_total}") %></p>
 		<% end %>
 
-		<p>Total order: <%= number_to_currency(@order.order_total) %></p><br>
+		<p>Total order: <%= amount(@order.order_total) %></p><br>
 
 		<p>Best regards,</p><br>
 		Bookstore Sales Team
