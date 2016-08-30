@@ -59,6 +59,7 @@ group :test do
 	gem 'capybara', '2.4.4'
 	gem 'faker'
   gem 'shoulda-matchers', require: false
+  gem 'selenium-webdriver', '~> 2.45'
 end
 
 group :development do 

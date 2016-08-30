@@ -9,7 +9,7 @@ RSpec.feature 'Creating Orders' do
 		sign_in_user
 	end
 
-	scenario 'create a valid book' do 
+	scenario 'create a valid book', js: true do 
 		visit root_path
 
 		click_link 'Catalogs', exact: false
