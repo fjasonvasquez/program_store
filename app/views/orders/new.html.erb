@@ -6,12 +6,12 @@
   </script>
 
   <%= javascript_tag "Stripe.setPublishableKey('#{ENV['STRIPE_PUBLISHABLE_KEY']}');" %>
-  <%= javascript_include_tag 'order' %>
+  <%= javascript_include_tag 'orders' %>
 <% end %>
 
 <div class='row'>
   <div class='col-md-10'>
-    <%= bootstrap_form_for(@order, :html => {:class => "form-horizontal", id: "order-form"}) do |f| %>
+    <%= bootstrap_form_for(@order, :html => {:class => "form-horizontal", id: "payment-form"}) do |f| %>
       <fieldset>
         <span class="order-errors"></span>
         <div class="form-group">
