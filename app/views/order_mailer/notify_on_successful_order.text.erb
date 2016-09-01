@@ -4,8 +4,7 @@
 		Thank you for your order. Please find below the details of your order.
 
 		<% @order.order_items.each do |item| %>
-			<%= item.quantity %> x <%= item.book.title %>
-			<%= amount("#{item.line_total}") %>
+			<%= item.quantity %> x <%= item.book.title %> <%= amount("#{item.line_total}") %>
 		<% end %>
 
 		Total order: <%= amount(@order.order_total) %>

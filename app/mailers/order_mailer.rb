@@ -9,3 +9,4 @@ class OrderMailer < ApplicationMailer
 		subject: 'Order Confirmation'
 	end
 end
+
