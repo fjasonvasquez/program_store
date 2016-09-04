@@ -27,7 +27,7 @@ gem 'jquery-ui-rails', '5.0.5'
 
 gem 'carrierwave-dropbox'
 gem 'mini_magick'
-gem 'figaro'
+gem 'figaro', '~>1.1.1'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'will_paginate-bootstrap', '1.0.1'
