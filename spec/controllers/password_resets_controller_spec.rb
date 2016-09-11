@@ -67,7 +67,7 @@ RSpec.describe PasswordResetsController, :type => :controller do
         mary = Fabricate(:user, password: 'password')
         mary.update(token: '12345')
         put :update, id: '12345', user: { password: 'password2' }
-        expect(mary.reload.authenticate('password2')).to be_true
+        expect(mary.reload.authenticate('password2')).to be_true?
       end
 
       it "redirects to the sign in page" do
