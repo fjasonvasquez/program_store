@@ -33,9 +33,14 @@
   <div class="row">
     <div class="col-sm-10 col-sm-offset-1">
       <hr>
-      <div class="form-group" id="signup-link">
-        Or<br>
+      <div class="form-group">
+        <div class="col-md-2">
+          Or<br>
         <%= link_to "Sign up", signup_path %>
+        </div>
+         <div class="col-md-8">
+        <%= link_to "Forgotten Password?", reset_password_path %>
+        </div>
       </div>
     </div>
   </div>
