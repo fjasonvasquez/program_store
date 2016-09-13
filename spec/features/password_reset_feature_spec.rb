@@ -26,3 +26,4 @@ RSpec.feature "Resetting Users' Password" do
 
 		expect(page).to have_content('Email invalid')
 	end
+end
